@@ -1,39 +1,72 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.*;
-
 class Data implements Comparable<Data> {
-    private int age;
+    private double age;
     private double bmi;
-    private boolean menstrualIrregularity;
+    private int menstrualIrregularity;
     private double testosteroneLevel;
     private int antralFollicleCount;
-    private boolean pcosDiagnosis;
-    private double distance;
+    private int pcosDiagnosis;
+    private double distance; // digunakan untuk sorting KNN
 
-    public Data(int age, double bmi, int menstrualIrregularity, double testosteroneLevel, int antralFollicleCount, int pcosDiagnosis) {
+    public Data(double age, double bmi, int menstrualIrregularity, double testosteroneLevel, int antralFollicleCount, int pcosDiagnosis) {
         this.age = age;
         this.bmi = bmi;
-        this.menstrualIrregularity = menstrualIrregularity == 1;
+        this.menstrualIrregularity = menstrualIrregularity;
         this.testosteroneLevel = testosteroneLevel;
         this.antralFollicleCount = antralFollicleCount;
-        this.pcosDiagnosis = pcosDiagnosis == 1;
+        this.pcosDiagnosis = pcosDiagnosis;
+    }
+
+    public double getAge() {
+        return age;
+    }
+
+    public void setAge(double age) {
+        this.age = age;
+    }
+
+    public double getBmi() {
+        return bmi;
+    }
+
+    public void setBmi(double bmi) {
+        this.bmi = bmi;
+    }
+
+    public int getMenstrualIrregularity() {
+        return menstrualIrregularity;
+    }
+
+    public double getTestosteroneLevel() {
+        return testosteroneLevel;
+    }
+
+    public void setTestosteroneLevel(double testosteroneLevel) {
+        this.testosteroneLevel = testosteroneLevel;
+    }
+
+    public int getAntralFollicleCount() {
+        return antralFollicleCount;
+    }
+
+    public void setAntralFollicleCount(int antralFollicleCount) {
+        this.antralFollicleCount = antralFollicleCount;
+    }
+
+    public int getPcosDiagnosis() {
+        return pcosDiagnosis;
     }
 
     public double calculateDistance(Data other) {
-        return Math.sqrt(Math.pow(this.age - other.age, 2) +
-                Math.pow(this.bmi - other.bmi, 2) +
-                Math.pow(this.testosteroneLevel - other.testosteroneLevel, 2) +
-                Math.pow(this.antralFollicleCount - other.antralFollicleCount, 2));
+        return Math.sqrt(
+                Math.pow(this.age - other.age, 2) +
+                        Math.pow(this.bmi - other.bmi, 2) +
+                        Math.pow(this.testosteroneLevel - other.testosteroneLevel, 2) +
+                        Math.pow(this.antralFollicleCount - other.antralFollicleCount, 2)
+        );
     }
 
     public void setDistance(double distance) {
         this.distance = distance;
-    }
-
-    public boolean isPcosDiagnosis() {
-        return pcosDiagnosis;
     }
 
     @Override
