@@ -3,7 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-//Konstruktor: memuat data dari file CSV dan langsung menjalankan EDA serta normalisasi
+//Konstruktor untuk memuat data dari file CSV dan langsung menjalankan EDA serta normalisasi
 public class database {
     private ArrayList<Data> data = new ArrayList<>();
     private String filename = "C:\\DataProcessing\\src\\pcos_dataset.csv";
@@ -25,24 +25,15 @@ public class database {
         return data;
     }
 
-    /*
-    Membaca file dataset PCOS dari path yang telah ditentukan dan mem-parsing setiap baris
-    menjadi objek `Data`. File diasumsikan berformat CSV dengan urutan kolom:
-    Age, BMI, Menstrual Irregularity, Testosterone Level, Antral Follicle Count, PCOS Diagnosis.
-    Dataset akan disimpan ke dalam list `data`
-     */
     public void open() {
         System.out.println("\nMembaca dataset PCOS...");
         try { // Baca semua baris dari file
             List<String> lines = Files.readAllLines(path);
             data = new ArrayList<>();
 
-            // Lewati header (mulai dari index 1)
             for (int i = 1; i < lines.size(); i++) {
                 String line = lines.get(i);
                 String[] element = line.split(",");
-
-                // Parsing setiap kolom menjadi tipe data yang sesuai
                 int age = Integer.parseInt(element[0]);
                 double bmi = Double.parseDouble(element[1]);
                 int menstrualIrregularity = Integer.parseInt(element[2]);
@@ -59,7 +50,7 @@ public class database {
     }
 
     /*
-    Melakukan Exploratory Data Analysis (EDA) sederhana untuk menghitung dan mencetak nilai rata-rata untuk fitur numerik.
+    Melakukan Exploratory Data Analysis (EDA) untuk menghitung dan mencetak nilai rata-rata untuk fitur numerik.
      */
     public void lakukanEDA() {
         System.out.println("=== Exploratory Data Analysis (EDA) ===");
@@ -136,7 +127,7 @@ public class database {
 
     //Menampilkan data setelah proses normalisasi.
     public void showData() {
-            database db = new database(); // otomatis lakukan normalisasi
+            database db = new database();
             ArrayList<Data> dataList = db.getData();
 
             System.out.println("=== Data Setelah Normalisasi ===");
