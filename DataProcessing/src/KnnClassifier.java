@@ -12,15 +12,9 @@ public class KnnClassifier {
         this.trainingData = data;
     }
 
-    /*
-    Melakukan prediksi terhadap satu data uji berdasarkan jarak ke data pelatihan.
-    Menggunakan voting mayoritas dari k tetangga terdekat.
-    */
     public int predict(Data input) {
-
-        // Buat priority queue untuk menyimpan data berdasarkan jarak terdekat
+        // Buat priority queue untuk menyimpan data berdasarkan jarak terdekat lalu Hitung jarak dari input ke seluruh data training
         PriorityQueue<DataDistance> pq = new PriorityQueue<>(Comparator.comparingDouble(d -> d.distance));
-        // Hitung jarak dari input ke seluruh data training
         for (Data d : trainingData) {
             double distance = calculateDistance(d, input);
             pq.offer(new DataDistance(d, distance));
@@ -39,9 +33,8 @@ public class KnnClassifier {
     }
 
     /*
-    Menghitung jarak Euclidean antara dua objek Data berdasarkan 4 fitur numerik:
-    Age, BMI, Testosterone Level, dan Antral Follicle Count
-    Lalu @return jarak Euclidean.
+    Menghitung jarak Euclidean antara dua objek Data berdasarkan 4 fitur numerik: Age, BMI, Testosteron Level, dan AFC
+    lalu return jarak Euclidean.
     */
     private double calculateDistance(Data a, Data b) {
         double ageDiff = a.getAge() - b.getAge();
@@ -52,8 +45,7 @@ public class KnnClassifier {
     }
 
     /*
-    Menilai akurasi model KNN menggunakan metode hold-out,
-    kemudian data akan diacak dan dibagi menjadi training dan testing set.
+    Menilai akurasi model KNN menggunakan metode hold-out, kemudian data akan diacak dan dibagi menjadi training dan testing.
     */
     public void evaluate(List<Data> dataset, double trainRatio) {
         Collections.shuffle(dataset, new Random());
@@ -64,7 +56,6 @@ public class KnnClassifier {
 
         fit(trainSet); //training
 
-        // Variabel confusion matrix
         int TP = 0, FP = 0, TN = 0, FN = 0;
 
         // Lakukan prediksi pada test set
@@ -79,7 +70,7 @@ public class KnnClassifier {
             else if (predicted == 0 && actual == 1) FN++;
         }
 
-        // Tampilkan metrik evaluasi
+        // Tampilkan metrik dari class evaluation
         Evaluation metrics = new Evaluation();
         metrics.setMetrics(TP, TN, FP, FN);
         metrics.printEvaluation();
